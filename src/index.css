@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+	.elevation {
+		/* Stronger bottom-biased shadow to remain visible beneath scroll/overflow containers */
+		@apply shadow-[0_14px_28px_-12px_rgba(0,0,0,0.22),0_4px_8px_-4px_rgba(0,0,0,0.12)] transition-transform duration-200 will-change-transform hover:scale-[1.01];
+	}
+	/* Same elevation shadow without hover scaling (use for tables) */
+	.elevation-static {
+		@apply shadow-[0_14px_28px_-12px_rgba(0,0,0,0.22),0_4px_8px_-4px_rgba(0,0,0,0.12)];
+	}
+	.elevation-bottom {
+		/* Extra-strong bottom emphasis for wide tables */
+		@apply shadow-[0_22px_44px_-16px_rgba(0,0,0,0.28),0_10px_18px_-12px_rgba(0,0,0,0.18)];
+	}
+	/* Unified control style for filters/buttons/selects */
+	.filter-control {
+		@apply h-10 min-w-[180px] rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 shadow-sm hover:border-gray-400 focus:border-emerald-600 transition-colors duration-150;
+	}
+}
+
+
