@@ -1,90 +1,6 @@
 import React from 'react';
-
-export type Topic = 'Medical' | 'Legal' | 'Routine' | 'Urgent';
-
-export interface RealTimeSession {
-	id: string;
-	facility: string;
-	location: string;
-	officer: string;
-	languageDetected: string;
-	topic: Topic;
-	aiConfidence: number; // 0-100
-	duration: string; // "mm:ss"
-}
-
-const mockSessions: RealTimeSession[] = [
-	{
-		id: 'TRX-2033-09',
-		facility: 'Riyadh Reform Center',
-		location: 'Legal Room 2',
-		officer: 'Lt. Al-Faraj',
-		languageDetected: 'Urdu',
-		topic: 'Legal',
-		aiConfidence: 97,
-		duration: '06:42',
-	},
-	{
-		id: 'TRX-2033-12',
-		facility: 'Jeddah Rehabilitation Complex',
-		location: 'Medical Wing A',
-		officer: 'Officer Al-Qahtani',
-		languageDetected: 'Bengali',
-		topic: 'Medical',
-		aiConfidence: 93,
-		duration: '03:19',
-	},
-	{
-		id: 'TRX-2033-18',
-		facility: 'Dammam Correctional Facility',
-		location: 'Intake Desk 1',
-		officer: 'Sgt. Al-Harbi',
-		languageDetected: 'Tagalog',
-		topic: 'Routine',
-		aiConfidence: 88,
-		duration: '01:54',
-	},
-	{
-		id: 'TRX-2033-21',
-		facility: 'Riyadh Reform Center',
-		location: 'Visitation Hall',
-		officer: 'Cpt. Al-Juhani',
-		languageDetected: 'Amharic',
-		topic: 'Urgent',
-		aiConfidence: 84,
-		duration: '04:27',
-	},
-	{
-		id: 'TRX-2033-24',
-		facility: 'Jeddah Rehabilitation Complex',
-		location: 'Legal Room 1',
-		officer: 'Lt. Al-Mutairi',
-		languageDetected: 'Urdu',
-		topic: 'Legal',
-		aiConfidence: 96,
-		duration: '08:05',
-	},
-	{
-		id: 'TRX-2033-26',
-		facility: 'Dammam Correctional Facility',
-		location: 'Medical Wing B',
-		officer: 'Officer Al-Shahrani',
-		languageDetected: 'Bengali',
-		topic: 'Medical',
-		aiConfidence: 91,
-		duration: '02:48',
-	},
-	{
-		id: 'TRX-2033-29',
-		facility: 'Riyadh Reform Center',
-		location: 'Control Desk',
-		officer: 'Sgt. Al-Shehri',
-		languageDetected: 'Tagalog',
-		topic: 'Routine',
-		aiConfidence: 86,
-		duration: '00:52',
-	},
-];
+import { sessions as mockSessions, Topic } from '../data/sessions';
+import { useNavigate } from 'react-router-dom';
 
 const topicStyles: Record<Topic, string> = {
 	Medical: 'bg-blue-50 text-blue-700 ring-blue-600/20',
@@ -100,6 +16,7 @@ function confidenceBarColor(conf: number): string {
 }
 
 export default function RealTimeMonitorSection(): JSX.Element {
+	const navigate = useNavigate();
 	return (
 		<section>
 			<div className="mb-4">
@@ -134,7 +51,7 @@ export default function RealTimeMonitorSection(): JSX.Element {
 			</div>
 
 			<div className="mx-0 overflow-x-visible">
-				<div className="inline-block min-w-full align-middle px-4 sm:px-6 lg:px-8">
+				<div className="inline-block min-w-full align-middle px-0">
 					<div className="elevation-static rounded-xl bg-white">
 						<div className="overflow-hidden rounded-xl border border-gray-200">
 							<table className="min-w-full divide-y divide-gray-200">
@@ -168,7 +85,7 @@ export default function RealTimeMonitorSection(): JSX.Element {
 							</thead>
 							<tbody className="divide-y divide-gray-200 bg-white">
 								{mockSessions.map((s) => (
-									<tr key={s.id} className="hover:bg-gray-50/60">
+									<tr key={s.id} className="hover:bg-gray-50/60 cursor-pointer" onClick={() => navigate(`/report/${s.id}`)}>
 										<td className="truncate px-3 py-2 text-sm font-medium text-gray-900 sm:px-4">
 											{s.id}
 										</td>

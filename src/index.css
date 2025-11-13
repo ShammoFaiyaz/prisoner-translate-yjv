@@ -19,6 +19,30 @@
 	.filter-control {
 		@apply h-10 min-w-[180px] rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 shadow-sm hover:border-gray-400 focus:border-emerald-600 transition-colors duration-150;
 	}
+
+	/* Route/page fade-in */
+	.route-fade {
+		opacity: 0;
+		transform: translateY(6px);
+		animation: fadeInUp 220ms ease-out forwards;
+	}
+
+	/* Scroll reveal helper */
+	.reveal {
+		opacity: 0;
+		transform: translateY(10px);
+		transition: opacity .35s ease-out, transform .35s ease-out;
+		will-change: opacity, transform;
+	}
+	.reveal-visible {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes fadeInUp {
+	from { opacity: 0; transform: translateY(6px); }
+	to { opacity: 1; transform: translateY(0); }
 }
 
 

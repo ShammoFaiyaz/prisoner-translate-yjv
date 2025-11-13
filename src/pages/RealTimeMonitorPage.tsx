@@ -6,10 +6,10 @@ export default function RealTimeMonitorPage(): JSX.Element {
 	return (
 		<section className="space-y-8">
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<KpiCard title="Active Sessions" value="8" bgClass="bg-sky-600" />
+				<KpiCard title="Active Sessions" value="8" bgClass="bg-green-700" />
 				<KpiCard title="Avg AI Confidence" value="93%" bgClass="bg-emerald-600" />
-				<KpiCard title="Most Used Language" value="Bengali" bgClass="bg-indigo-600" />
-				<KpiCard title="Urgent Sessions" value="1" bgClass="bg-rose-600" />
+				<KpiCard title="Most Used Language" value="Bengali" bgClass="bg-amber-700" />
+				<KpiCard title="Urgent Sessions" value="1" bgClass="bg-amber-700" />
 			</div>
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
 				<p className="text-sm font-medium text-gray-900">Topic distribution today</p>

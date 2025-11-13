@@ -13,8 +13,8 @@ export default function OperationsSection(): JSX.Element {
 
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
 				<KpiCard title="Avg Time Saved per Interaction" value="1.8 min" bgClass="bg-emerald-600" />
-				<KpiCard title="Daily Translations" value="3,480" bgClass="bg-sky-600" />
-				<KpiCard title="Automated vs Human-reviewed" value="94% automated" bgClass="bg-indigo-600" />
+				<KpiCard title="Daily Translations" value="3,480" bgClass="bg-green-700" />
+				<KpiCard title="Automated vs Human-reviewed" value="94% automated" bgClass="bg-amber-700" />
 				<KpiCard title="Legal Consultation Speed Improvement" value="+75%" bgClass="bg-emerald-600" />
 				<KpiCard title="Medical Communication Improvement" value="+50%" bgClass="bg-emerald-600" />
 			</div>

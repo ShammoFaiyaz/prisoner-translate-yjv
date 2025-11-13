@@ -65,6 +65,25 @@ const navItems: NavItem[] = [
 export default function DashboardLayout(): JSX.Element {
 	const location = useLocation();
 	const [notifOpen, setNotifOpen] = React.useState(false);
+	React.useEffect(() => {
+		// On route change: fade in all page sections at once
+		const targets = Array.from(
+			document.querySelectorAll<HTMLElement>('section, .elevation, .elevation-static, table tr')
+		);
+		// Reset any previous classes
+		targets.forEach((el) => {
+			el.classList.remove('reveal-visible');
+			el.classList.add('reveal');
+		});
+		// Force reflow then show all simultaneously for smooth transition
+		requestAnimationFrame(() => {
+			targets.forEach((el) => {
+				// force reflow to ensure transition runs
+				void el.getBoundingClientRect();
+				el.classList.add('reveal-visible');
+			});
+		});
+	}, [location.pathname]);
 	return (
 		<div className="flex h-screen w-full bg-gray-50 text-gray-900">
 			<aside className="hidden w-80 shrink-0 border-r border-gray-200 bg-white shadow-xl relative z-20 sm:flex sm:flex-col">
@@ -86,7 +105,7 @@ export default function DashboardLayout(): JSX.Element {
 							Translator Overview
 						</div>
 						<div className="grid grid-cols-2 gap-2">
-							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-sky-600 text-white">
+							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-green-700 text-white">
 								<div className="text-sm font-medium text-white/90">Translations Today</div>
 								<div className="text-2xl font-semibold">3,480</div>
 							</div>
@@ -94,7 +113,7 @@ export default function DashboardLayout(): JSX.Element {
 								<div className="text-sm font-medium text-white/90">AI Accuracy</div>
 								<div className="text-2xl font-semibold">98.6%</div>
 							</div>
-							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-indigo-600 text-white">
+							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-amber-700 text-white">
 								<div className="text-sm font-medium text-white/90">Active Devices</div>
 								<div className="text-2xl font-semibold">142</div>
 							</div>
@@ -140,7 +159,7 @@ export default function DashboardLayout(): JSX.Element {
 			<div className="flex min-w-0 flex-1 flex-col">
 				{/* Top controls bar */}
 				<header className="sticky top-0 z-30 w-full border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-					<div className="mx-auto flex h-14 max-w-7xl items-center justify-end gap-2 px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto flex h-14 max-w-[1400px] items-center justify-end gap-2 px-3 sm:px-4 lg:px-6">
 						<label htmlFor="global-facility" className="hidden text-sm text-gray-600 md:block">
 							Facility
 						</label>
@@ -175,47 +194,55 @@ export default function DashboardLayout(): JSX.Element {
 							<span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
 							<span>System Online</span>
 						</div>
-						<span className="filter-control flex items-center font-medium text-gray-700">Facility: All</span>
 						<div className="relative">
 							<button
 								type="button"
 								aria-label="Notifications"
 								onClick={() => setNotifOpen((v) => !v)}
-								className="filter-control flex items-center justify-center"
+								className="rounded-full p-2 text-gray-700 hover:bg-gray-100 focus:outline-none"
 							>
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5" strokeWidth="2">
 									<path d="M12 22a2 2 0 0 0 2-2H10a2 2 0 0 0 2 2z" />
 									<path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2z" />
 								</svg>
 							</button>
+							{/* Notification badge */}
+							<span id="notif-badge" className="pointer-events-none absolute -right-0.5 -top-0.5 inline-flex h-2.5 w-2.5 items-center justify-center rounded-full bg-rose-500"></span>
 							{notifOpen ? (
-								<div className="absolute right-0 z-50 mt-2 w-64 rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
-									<p className="text-sm font-semibold text-gray-900">Notifications</p>
-									<ul className="mt-2 space-y-2 text-sm text-gray-700">
-										<li className="rounded-md bg-emerald-50 p-2">
-											System healthy. No incidents reported.
+								<div className="absolute right-0 z-50 mt-2 w-72 rounded-md border border-gray-200 bg-white/95 p-2 shadow-md backdrop-blur">
+									<div className="mb-1 flex items-center justify-between">
+										<p className="text-xs font-medium text-gray-900">Notifications</p>
+										<button className="text-[11px] text-emerald-700 hover:underline" onClick={() => {
+											// simulate mark all read by closing and removing badge
+											const badge = (document.querySelector('#notif-badge') as HTMLElement) || null;
+											if (badge) badge.style.display = 'none';
+											setNotifOpen(false);
+										}}>Mark all as read</button>
+									</div>
+									<ul className="space-y-1 text-xs text-gray-700">
+										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
+											<span className="mt-1 h-2 w-2 rounded-full bg-emerald-500" />
+											<span>System healthy. No incidents reported.</span>
 										</li>
-										<li className="rounded-md bg-amber-50 p-2">
-											Maintenance window tonight 02:00–03:00.
+										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
+											<span className="mt-1 h-2 w-2 rounded-full bg-amber-500" />
+											<span>Maintenance window tonight 02:00–03:00.</span>
 										</li>
-										<li className="rounded-md bg-sky-50 p-2">
-											New device activated in Riyadh Reform Center.
+										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
+											<span className="mt-1 h-2 w-2 rounded-full bg-sky-500" />
+											<span>New device activated in Riyadh Reform Center.</span>
 										</li>
 									</ul>
-									<button
-										className="mt-3 w-full rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
-										onClick={() => setNotifOpen(false)}
-									>
-										Close
-									</button>
 								</div>
 							) : null}
 						</div>
 					</div>
 				</header>
 				<div className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 via-white to-gray-100">
-					<main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-						<Outlet />
+					<main className="mx-auto max-w-[1400px] px-3 py-8 sm:px-4 lg:px-6">
+						<div key={location.pathname} className="route-fade">
+							<Outlet />
+						</div>
 					</main>
 				</div>
 			</div>

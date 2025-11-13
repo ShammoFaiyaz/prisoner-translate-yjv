@@ -6,11 +6,11 @@ export default function Vision2030Page(): JSX.Element {
 	const radarLabels = [
 		'Security',
 		'Operational',
-		'Justice & Dignity',
+		'Justice',
 		'Healthcare',
 		'Workforce',
-		'Data & Analytics',
-		'Tech Adoption',
+		'Data',
+		'Tech',
 	];
 	// normalized 0-1
 	const radarValues = [0.92, 0.88, 0.96, 0.9, 0.85, 0.82, 0.87];
@@ -19,7 +19,8 @@ export default function Vision2030Page(): JSX.Element {
 		const size = 260;
 		const cx = size / 2;
 		const cy = size / 2;
-		const maxR = (size / 2) - 24;
+		// Smaller radius to leave room for outer labels
+		const maxR = (size / 2) - 44;
 		const steps = 5;
 		const N = radarLabels.length;
 		const angleStep = (Math.PI * 2) / N;
@@ -49,11 +50,15 @@ export default function Vision2030Page(): JSX.Element {
 				})}
 				{/* polygon */}
 				<polygon points={polygonPoints} className="fill-emerald-300/40 stroke-emerald-600" strokeWidth="2" />
-				{/* labels (kept within chart bounds to avoid cutoff) */}
+				{/* labels placed outside the circle and larger */}
 				{radarLabels.map((lbl, i) => {
-					const [x, y] = toPoint(i, 0.93);
+					const [x, y] = toPoint(i, 1.25);
+					let dx = 0;
+					if (lbl === 'Operational') dx = 12;
+					if (lbl === 'Tech Adoption') dx = -12;
+					if (lbl === 'Analytics') dx = -12;
 					return (
-						<text key={lbl} x={x} y={y} textAnchor="middle" dominantBaseline="middle" className="text-[10px] fill-gray-700">
+						<text key={lbl} x={x + dx} y={y} textAnchor="middle" dominantBaseline="middle" className="text-[12px] fill-gray-700">
 							{lbl}
 						</text>
 					);
@@ -92,7 +97,7 @@ export default function Vision2030Page(): JSX.Element {
 				{[60, 70, 80, 90, 100].map((g) => (
 					<g key={g}>
 						<line x1={pad} y1={ys(g)} x2={w - pad} y2={ys(g)} className="stroke-gray-200" />
-						<text x={8} y={ys(g)} className="text-[10px] fill-gray-600" dominantBaseline="middle">{g}%</text>
+						<text x={pad - 14} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle">{g}%</text>
 					</g>
 				))}
 				{/* x-axis ticks and labels */}

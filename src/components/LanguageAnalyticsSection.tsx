@@ -29,59 +29,61 @@ export default function LanguageAnalyticsSection(): JSX.Element {
 			</div>
 
 			<div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
-				{/* Table */}
+				{/* Redesigned compact table */}
 				<div className="lg:col-span-2">
-					<div className="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-						<div className="inline-block min-w-full align-middle px-4 sm:px-6 lg:px-8">
-							<div className="elevation-static rounded-xl bg-white">
-								<div className="overflow-hidden rounded-xl border border-gray-200">
-									<table className="min-w-full divide-y divide-gray-200">
-									<thead className="bg-gray-50">
-										<tr>
-											<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
-												Language
-											</th>
-											<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
-												Daily Sessions
-											</th>
-											<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
-												Accuracy
-											</th>
-											<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
-												Avg Confidence
-											</th>
-										</tr>
-									</thead>
-									<tbody className="divide-y divide-gray-200 bg-white">
-										{languageStats.map((row) => {
-											const widthPct = Math.max(6, Math.round((row.dailySessions / maxSessions) * 100)); // ensure visible
-											return (
-												<tr key={row.language} className="hover:bg-gray-50/60">
-													<td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 sm:px-6">
-														{row.language}
-													</td>
-													<td className="px-4 py-3 sm:px-6">
-														<div className="text-sm text-gray-900">{row.dailySessions}</div>
-														<div className="mt-1 h-1.5 w-full rounded-full bg-gray-200">
-															<div
-																className="h-1.5 rounded-full bg-sky-500"
-																style={{ width: `${widthPct}%` }}
-															/>
-														</div>
-													</td>
-													<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
-														{row.accuracy.toFixed(1)}%
-													</td>
-													<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
-														{row.avgConfidence.toFixed(1)}%
-													</td>
-												</tr>
-											);
-										})}
-									</tbody>
-									</table>
-								</div>
-							</div>
+					<div className="elevation-static rounded-xl bg-white">
+						<div className="overflow-hidden rounded-xl border border-gray-200">
+							<table className="min-w-full table-fixed divide-y divide-gray-200">
+								<colgroup>
+									<col style={{ width: '20%' }} />
+									<col style={{ width: '45%' }} />
+									<col style={{ width: '17.5%' }} />
+									<col style={{ width: '17.5%' }} />
+								</colgroup>
+								<thead className="bg-gray-50">
+									<tr>
+										<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">
+											Language
+										</th>
+										<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">
+											Daily Sessions
+										</th>
+										<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">
+											Accuracy
+										</th>
+										<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">
+											Avg Confidence
+										</th>
+									</tr>
+								</thead>
+								<tbody className="divide-y divide-gray-200 bg-white">
+									{languageStats.map((row) => {
+										const widthPct = Math.max(6, Math.round((row.dailySessions / maxSessions) * 100));
+										return (
+											<tr key={row.language} className="hover:bg-gray-50/60">
+												<td className="truncate px-3 py-2 text-sm font-medium text-gray-900">
+													{row.language}
+												</td>
+												<td className="px-3 py-2">
+													<div className="text-sm text-gray-900">{row.dailySessions}</div>
+													<div className="mt-1 h-1.5 w-full rounded-full bg-gray-200">
+														<div
+															className="h-1.5 rounded-full bg-sky-500"
+															style={{ width: `${widthPct}%` }}
+														/>
+													</div>
+												</td>
+												<td className="truncate px-3 py-2 text-sm text-gray-700">
+													{row.accuracy.toFixed(1)}%
+												</td>
+												<td className="truncate px-3 py-2 text-sm text-gray-700">
+													{row.avgConfidence.toFixed(1)}%
+												</td>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

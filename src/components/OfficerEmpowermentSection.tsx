@@ -12,9 +12,9 @@ export default function OfficerEmpowermentSection(): JSX.Element {
 			</div>
 
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<KpiCard title="Active Officers Today" value="263" bgClass="bg-sky-600" />
+				<KpiCard title="Active Officers Today" value="263" bgClass="bg-green-700" />
 				<KpiCard title="Training Completion" value="92% of staff" bgClass="bg-emerald-600" />
-				<KpiCard title="Officer Satisfaction" value="4.7 / 5" bgClass="bg-amber-600" />
+				<KpiCard title="Officer Satisfaction" value="4.7 / 5" bgClass="bg-amber-700" />
 				<KpiCard title="Repetition Fatigue Reduction" value="-30%" bgClass="bg-emerald-600" />
 			</div>
 

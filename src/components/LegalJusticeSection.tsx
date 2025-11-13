@@ -21,7 +21,7 @@ export default function LegalJusticeSection(): JSX.Element {
 				<KpiCard
 					title="Legal Translation Sessions (Today)"
 					value="128"
-					bgClass="bg-indigo-600"
+					bgClass="bg-amber-700"
 					subtitle="Sessions conducted"
 				/>
 				<KpiCard

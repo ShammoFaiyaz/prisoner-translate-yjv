@@ -8,9 +8,9 @@ export default function OverviewPage(): JSX.Element {
 		<section className="space-y-8">
 			{/* Top KPIs */}
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<KpiCard title="Translations Today" value="3,480" subtitle="Completed today" bgClass="bg-sky-600" valueClass="text-2xl" />
+				<KpiCard title="Translations Today" value="3,480" subtitle="Completed today" bgClass="bg-green-700" valueClass="text-2xl" />
 				<KpiCard title="AI Accuracy" value="98.6%" subtitle="Last 24h (weighted)" bgClass="bg-emerald-600" valueClass="text-2xl" />
-				<KpiCard title="Active Devices" value="142" subtitle="Mobile & Static" bgClass="bg-indigo-600" valueClass="text-2xl" />
+				<KpiCard title="Active Devices" value="142" subtitle="Mobile & Static" bgClass="bg-amber-700" valueClass="text-2xl" />
 				<KpiCard title="System Status" value="Online" subtitle="All services healthy" bgClass="bg-teal-600" valueClass="text-2xl" />
 			</div>
 

@@ -16,7 +16,7 @@ export default function SecuritySection(): JSX.Element {
 					title="Comms-related Incidents (This Month)"
 					value="3"
 					subtitle="↓ 63% vs last month"
-					bgClass="bg-rose-600"
+					bgClass="bg-amber-700"
 				/>
 				<KpiCard
 					title="Emergency Translation Reliability"
@@ -28,7 +28,7 @@ export default function SecuritySection(): JSX.Element {
 					title="High-risk Miscommunication Alerts (24h)"
 					value="1"
 					subtitle="Flagged sessions"
-					bgClass="bg-amber-600"
+					bgClass="bg-amber-700"
 				/>
 			</div>
 
