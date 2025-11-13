@@ -133,35 +133,35 @@ export default function RealTimeMonitorSection(): JSX.Element {
 				</div>
 			</div>
 
-			<div className="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+			<div className="mx-0 overflow-x-visible">
 				<div className="inline-block min-w-full align-middle px-4 sm:px-6 lg:px-8">
 					<div className="elevation-static rounded-xl bg-white">
 						<div className="overflow-hidden rounded-xl border border-gray-200">
 							<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
 								<tr>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Session ID
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="hidden md:table-cell px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Facility
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="hidden lg:table-cell px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Location
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="hidden xl:table-cell px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Officer
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Language Detected
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Topic
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										AI Confidence
 									</th>
-									<th scope="col" className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-6">
+									<th scope="col" className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-600 sm:px-4">
 										Duration
 									</th>
 								</tr>
@@ -169,27 +169,27 @@ export default function RealTimeMonitorSection(): JSX.Element {
 							<tbody className="divide-y divide-gray-200 bg-white">
 								{mockSessions.map((s) => (
 									<tr key={s.id} className="hover:bg-gray-50/60">
-										<td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900 sm:px-6">
+										<td className="truncate px-3 py-2 text-sm font-medium text-gray-900 sm:px-4">
 											{s.id}
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
+										<td className="hidden md:table-cell truncate px-3 py-2 text-sm text-gray-700 sm:px-4">
 											{s.facility}
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
+										<td className="hidden lg:table-cell truncate px-3 py-2 text-sm text-gray-700 sm:px-4">
 											{s.location}
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
+										<td className="hidden xl:table-cell truncate px-3 py-2 text-sm text-gray-700 sm:px-4">
 											{s.officer}
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
+										<td className="truncate px-3 py-2 text-sm text-gray-700 sm:px-4">
 											{s.languageDetected}
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 sm:px-6">
+										<td className="px-3 py-2 sm:px-4">
 											<span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${topicStyles[s.topic]}`}>
 												{s.topic}
 											</span>
 										</td>
-										<td className="px-4 py-3 sm:px-6">
+										<td className="px-3 py-2 sm:px-4">
 											<div className="flex min-w-[140px] flex-col">
 												<div className="flex items-center justify-between">
 													<span className="text-sm font-medium text-gray-900">{s.aiConfidence}%</span>
@@ -202,7 +202,7 @@ export default function RealTimeMonitorSection(): JSX.Element {
 												</div>
 											</div>
 										</td>
-										<td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700 sm:px-6">
+										<td className="truncate px-3 py-2 text-sm text-gray-700 sm:px-4">
 											{s.duration}
 										</td>
 									</tr>

@@ -64,6 +64,7 @@ const navItems: NavItem[] = [
 
 export default function DashboardLayout(): JSX.Element {
 	const location = useLocation();
+	const [notifOpen, setNotifOpen] = React.useState(false);
 	return (
 		<div className="flex h-screen w-full bg-gray-50 text-gray-900">
 			<aside className="hidden w-80 shrink-0 border-r border-gray-200 bg-white shadow-xl relative z-20 sm:flex sm:flex-col">
@@ -137,6 +138,81 @@ export default function DashboardLayout(): JSX.Element {
 				</div>
 			</aside>
 			<div className="flex min-w-0 flex-1 flex-col">
+				{/* Top controls bar */}
+				<header className="sticky top-0 z-30 w-full border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+					<div className="mx-auto flex h-14 max-w-7xl items-center justify-end gap-2 px-4 sm:px-6 lg:px-8">
+						<label htmlFor="global-facility" className="hidden text-sm text-gray-600 md:block">
+							Facility
+						</label>
+						<select id="global-facility" name="global-facility" className="filter-control">
+							<option>All Facilities</option>
+							<option>Riyadh Reform Center</option>
+							<option>Jeddah Rehabilitation Complex</option>
+							<option>Dammam Correctional Facility</option>
+						</select>
+						<select className="hidden md:block filter-control">
+							<option>All Topics</option>
+							<option>Medical</option>
+							<option>Legal</option>
+							<option>Routine</option>
+							<option>Urgent</option>
+						</select>
+						<select className="hidden md:block filter-control">
+							<option>Today</option>
+							<option>Last 7 days</option>
+							<option>Last 30 days</option>
+						</select>
+						<select className="hidden lg:block filter-control">
+							<option>All Languages</option>
+							<option>Arabic</option>
+							<option>English</option>
+							<option>Urdu</option>
+							<option>Bengali</option>
+							<option>Tagalog</option>
+							<option>Amharic</option>
+						</select>
+						<div className="hidden items-center gap-2 filter-control text-gray-700 sm:flex">
+							<span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+							<span>System Online</span>
+						</div>
+						<span className="filter-control flex items-center font-medium text-gray-700">Facility: All</span>
+						<div className="relative">
+							<button
+								type="button"
+								aria-label="Notifications"
+								onClick={() => setNotifOpen((v) => !v)}
+								className="filter-control flex items-center justify-center"
+							>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5" strokeWidth="2">
+									<path d="M12 22a2 2 0 0 0 2-2H10a2 2 0 0 0 2 2z" />
+									<path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2z" />
+								</svg>
+							</button>
+							{notifOpen ? (
+								<div className="absolute right-0 z-50 mt-2 w-64 rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+									<p className="text-sm font-semibold text-gray-900">Notifications</p>
+									<ul className="mt-2 space-y-2 text-sm text-gray-700">
+										<li className="rounded-md bg-emerald-50 p-2">
+											System healthy. No incidents reported.
+										</li>
+										<li className="rounded-md bg-amber-50 p-2">
+											Maintenance window tonight 02:00–03:00.
+										</li>
+										<li className="rounded-md bg-sky-50 p-2">
+											New device activated in Riyadh Reform Center.
+										</li>
+									</ul>
+									<button
+										className="mt-3 w-full rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
+										onClick={() => setNotifOpen(false)}
+									>
+										Close
+									</button>
+								</div>
+							) : null}
+						</div>
+					</div>
+				</header>
 				<div className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 via-white to-gray-100">
 					<main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 						<Outlet />
