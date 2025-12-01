@@ -32,6 +32,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }): J
 		if (typeof document !== 'undefined') {
 			document.documentElement.lang = language;
 			document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+			// Update page title per language
+			const title =
+				language === 'ar'
+					? 'الروبوت الذكي للترجمة الفورية والتفاعلية للنزلاء'
+					: 'Prisoner Intelligent Translation Platform (PITP)';
+			document.title = title;
 		}
 	}, [language]);
 
