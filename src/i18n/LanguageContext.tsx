@@ -8,7 +8,7 @@ type LanguageContextValue = {
 };
 
 const LanguageContext = createContext<LanguageContextValue>({
-	language: 'en',
+	language: 'ar',
 	setLanguage: () => {},
 	toggleLanguage: () => {},
 });
@@ -16,7 +16,7 @@ const LanguageContext = createContext<LanguageContextValue>({
 export function LanguageProvider({ children }: { children: React.ReactNode }): JSX.Element {
 	const [language, setLanguageState] = useState<Language>(() => {
 		const saved = typeof window !== 'undefined' ? (localStorage.getItem('pitp-language') as Language | null) : null;
-		return saved ?? 'en';
+		return saved ?? 'ar';
 	});
 
 	const setLanguage = (lang: Language) => {
