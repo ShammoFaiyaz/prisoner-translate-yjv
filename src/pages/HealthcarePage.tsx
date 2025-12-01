@@ -1,13 +1,17 @@
 import React from 'react';
 import HealthcareSection from '../components/HealthcareSection';
 import KpiCard from '../components/KpiCard';
+import { useTranslation } from '../i18n/useTranslation';
 
 export default function HealthcarePage(): JSX.Element {
+	const { language, t } = useTranslation();
+	const align = language === 'ar' ? 'text-right' : 'text-left';
 	// Simple 14-day line chart
 	function DailyConsultationsChart(): JSX.Element {
 		const w = 640;
 		const h = 200;
 		const pad = 28;
+		const tickPad = 14;
 		// mock counts for last 14 days
 		const data = [32, 35, 30, 38, 40, 42, 44, 41, 39, 45, 47, 50, 48, 52];
 		const today = new Date();
@@ -31,10 +35,19 @@ export default function HealthcarePage(): JSX.Element {
 				</defs>
 				<line x1={pad} y1={h - pad} x2={w - pad} y2={h - pad} className="stroke-gray-300" />
 				<line x1={pad} y1={pad} x2={pad} y2={h - pad} className="stroke-gray-300" />
-				{[10, 20, 30, 40, 50].map((g) => (
+				{[10, 20, 30, 40, 50].map((g, idx) => (
 					<g key={g}>
 						<line x1={pad} y1={ys(g)} x2={w - pad} y2={ys(g)} className="stroke-gray-200" />
-						<text x={pad - 12} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle">{g}</text>
+						<text
+							x={pad - tickPad}
+							y={ys(g) + (idx - 2) * 2}
+							className="text-[10px] fill-gray-600"
+							textAnchor="end"
+							dominantBaseline="middle"
+							style={{ direction: 'ltr' }}
+						>
+							{g}
+						</text>
 					</g>
 				))}
 				{labels.map((m, i) => (
@@ -55,13 +68,13 @@ export default function HealthcarePage(): JSX.Element {
 			<HealthcareSection />
 			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation lg:col-span-2">
-					<p className="text-sm font-medium text-gray-900">Daily medical consultations (last 14 days)</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('health.page.dailyConsultationsTitle')}</p>
 					<div className="mt-2">
 						<DailyConsultationsChart />
 					</div>
 				</div>
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Language distribution in medical wing</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('health.page.langDistributionTitle')}</p>
 					<div className="mt-4 grid grid-cols-2 gap-4">
 						<div className="text-center">
 							<div className="mx-auto h-16 w-16 rounded-full bg-sky-100 flex items-center justify-center text-sky-700 text-sm">Urdu</div>
@@ -84,25 +97,25 @@ export default function HealthcarePage(): JSX.Element {
 			</div>
 			{/* Additional healthcare KPIs */}
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				<KpiCard title="Avg Wait Time (Today)" value="06:20" subtitle="Reception to consultation" bgClass="bg-emerald-600" />
-				<KpiCard title="Urgent Cases (Today)" value="18" subtitle="Across all facilities" bgClass="bg-amber-700" />
-				<KpiCard title="Discharge Instructions Clarified" value="98%" subtitle="Understanding score" bgClass="bg-green-700" />
+				<KpiCard title={t('health.kpi.avgWaitTimeToday')} value="06:20" subtitle={t('health.kpi.subtitle.receptionToConsult')} bgClass="bg-emerald-600" />
+				<KpiCard title={t('health.kpi.urgentCasesToday')} value="18" subtitle={t('legal.metrics.subtitle.acrossFacilities')} bgClass="bg-amber-700" />
+				<KpiCard title={t('health.kpi.dischargeClarified')} value="98%" subtitle={t('health.kpi.subtitle.understandingScore')} bgClass="bg-green-700" />
 			</div>
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation-static">
-				<p className="text-sm font-medium text-gray-900">Recent medical interactions</p>
+				<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('health.page.recentInteractionsTitle')}</p>
 				<table className="mt-3 w-full text-sm">
 					<thead>
-						<tr className="text-left text-gray-600">
-							<th className="py-2">Language</th>
-							<th className="py-2">Type of visit</th>
-							<th className="py-2">Urgency</th>
-							<th className="py-2">Outcome</th>
+						<tr className={`text-gray-600 ${align}`}>
+							<th className="py-2">{t('table.languageDetected')}</th>
+							<th className="py-2">{t('table.typeOfVisit')}</th>
+							<th className="py-2">{t('table.urgency')}</th>
+							<th className="py-2">{t('table.outcome')}</th>
 						</tr>
 					</thead>
 					<tbody className="text-gray-800">
-						<tr><td className="py-2">Urdu</td><td>Checkup</td><td>Routine</td><td>Understood</td></tr>
-						<tr><td className="py-2">Bengali</td><td>Injury</td><td>Urgent</td><td>Understood</td></tr>
-						<tr><td className="py-2">Tagalog</td><td>Prescription</td><td>Routine</td><td>Understood</td></tr>
+						<tr><td className="py-2">{t('lang.urdu')}</td><td>{t('visit.checkup')}</td><td>Routine</td><td>{t('outcome.understood')}</td></tr>
+						<tr><td className="py-2">{t('lang.bengali')}</td><td>{t('visit.injury')}</td><td>Urgent</td><td>{t('outcome.understood')}</td></tr>
+						<tr><td className="py-2">{t('lang.tagalog')}</td><td>{t('visit.prescription')}</td><td>Routine</td><td>{t('outcome.understood')}</td></tr>
 					</tbody>
 				</table>
 			</div>

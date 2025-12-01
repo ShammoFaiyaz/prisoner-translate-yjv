@@ -7,7 +7,7 @@ export default function OfficerEmpowermentSection(): JSX.Element {
 			<div className="mb-2">
 				<h3 className="text-lg font-semibold text-gray-900">Officer Empowerment & Training</h3>
 				<p className="mt-1 text-sm text-gray-600">
-					AI assists and augments officers—speeding up workflows and improving outcomes without replacing human judgment.
+					AI assists and augments officers-speeding up workflows and improving outcomes without replacing human judgment.
 				</p>
 			</div>
 

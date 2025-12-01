@@ -8,7 +8,7 @@ import OperationsPage from './pages/OperationsPage';
 import LegalJusticePage from './pages/LegalJusticePage';
 import HealthcarePage from './pages/HealthcarePage';
 import LanguageAnalyticsPage from './pages/LanguageAnalyticsPage';
-import Vision2030Page from './pages/Vision2030Page';
+import { Vision2030Page } from './pages/Vision2030Page';
 import SessionReportPage from './pages/SessionReportPage';
 
 export default function App(): JSX.Element {

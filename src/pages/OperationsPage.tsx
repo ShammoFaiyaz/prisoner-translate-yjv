@@ -1,12 +1,16 @@
 import React from 'react';
 import OperationsSection from '../components/OperationsSection';
 import KpiCard from '../components/KpiCard';
+import { useTranslation } from '../i18n/useTranslation';
 
 export default function OperationsPage(): JSX.Element {
+	const { language, t } = useTranslation();
+	const align = language === 'ar' ? 'text-right' : 'text-left';
 	function ProcedureTrendChart(): JSX.Element {
 		const w = 560;
 		const h = 200;
 		const pad = 28;
+		const tickPad = 14;
 		// average minutes to complete a standard procedure over last 14 days (lower is better)
 		const data = [18, 18, 17, 17, 16, 16, 15, 15, 15, 14, 14, 13, 13, 12];
 		const labels = Array.from({ length: 14 }, (_, i) => `${i + 1}`);
@@ -25,10 +29,19 @@ export default function OperationsPage(): JSX.Element {
 				</defs>
 				<line x1={pad} y1={h - pad} x2={w - pad} y2={h - pad} className="stroke-gray-300" />
 				<line x1={pad} y1={pad} x2={pad} y2={h - pad} className="stroke-gray-300" />
-				{[10, 15, 20].map((g) => (
+				{[10, 15, 20].map((g, idx) => (
 					<g key={g}>
 						<line x1={pad} y1={ys(g)} x2={w - pad} y2={ys(g)} className="stroke-gray-200" />
-						<text x={pad - 12} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle">{g}m</text>
+						<text
+							x={pad - tickPad}
+							y={ys(g) + (idx - 1) * 3}
+							className="text-[10px] fill-gray-600"
+							textAnchor="end"
+							dominantBaseline="middle"
+							style={{ direction: 'ltr' }}
+						>
+							{g}m
+						</text>
 					</g>
 				))}
 				{labels.map((m, i) => (
@@ -48,48 +61,48 @@ export default function OperationsPage(): JSX.Element {
 			<OperationsSection />
 			{/* Additional ops KPIs */}
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				<KpiCard title="Avg Procedure Time (Today)" value="12 min" bgClass="bg-emerald-600" />
-				<KpiCard title="Automated tasks (Today)" value="1,128" bgClass="bg-green-700" />
-				<KpiCard title="Hand-offs avoided" value="284" bgClass="bg-amber-700" />
+				<KpiCard title={t('operations.kpi.avgProcTime')} value="12 min" bgClass="bg-emerald-600" />
+				<KpiCard title={t('operations.kpi.automatedTasks')} value="1,128" bgClass="bg-green-700" />
+				<KpiCard title={t('operations.kpi.handoffsAvoided')} value="284" bgClass="bg-amber-700" />
 			</div>
 			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Procedure completion time trend (last 14 days)</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('operations.page.procTrend')}</p>
 					<div className="mt-2">
 						<ProcedureTrendChart />
 					</div>
 				</div>
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation-static">
-					<p className="text-sm font-medium text-gray-900">Top bottlenecks resolved by translator</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('operations.page.topBottlenecks')}</p>
 					<table className="mt-3 w-full text-sm">
 						<thead>
-							<tr className="text-left text-gray-600">
-								<th className="py-2">Bottleneck</th>
-								<th className="py-2">Impact</th>
+							<tr className={`text-gray-600 ${align}`}>
+								<th className="py-2">{t('operations.table.bottleneck')}</th>
+								<th className="py-2">{t('operations.table.impact')}</th>
 							</tr>
 						</thead>
 						<tbody className="text-gray-800">
-							<tr><td className="py-2">Language clarification at intake</td><td>Reduced wait by 40%</td></tr>
-							<tr><td className="py-2">Legal briefing misunderstandings</td><td>↓ incidents by 63%</td></tr>
-							<tr><td className="py-2">Medical symptom triage</td><td>Improved accuracy to 99%</td></tr>
+							<tr><td className="py-2">{t('operations.bottlenecks.intakeClarification')}</td><td>{t('operations.impact.reducedWait40')}</td></tr>
+							<tr><td className="py-2">{t('operations.bottlenecks.legalBriefing')}</td><td>{t('operations.impact.incidentsDown63')}</td></tr>
+							<tr><td className="py-2">{t('operations.bottlenecks.medicalTriage')}</td><td>{t('operations.impact.improvedAccuracy99')}</td></tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			{/* Additional throughput panel */}
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-				<p className="text-sm font-medium text-gray-900">Throughput per shift (sessions processed)</p>
+				<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('operations.page.throughput')}</p>
 				<div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-3">
 					<div>
-						<p className="text-xs text-gray-600">Morning</p>
+						<p className={`mb-1 text-xs text-gray-600 ${align}`}>{t('operations.shift.morning')}</p>
 						<div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 w-[78%] rounded-full bg-emerald-500" /></div>
 					</div>
 					<div>
-						<p className="text-xs text-gray-600">Afternoon</p>
+						<p className={`mb-1 text-xs text-gray-600 ${align}`}>{t('operations.shift.afternoon')}</p>
 						<div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 w-[85%] rounded-full bg-emerald-500" /></div>
 					</div>
 					<div>
-						<p className="text-xs text-gray-600">Night</p>
+						<p className={`mb-1 text-xs text-gray-600 ${align}`}>{t('operations.shift.night')}</p>
 						<div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 w-[66%] rounded-full bg-emerald-500" /></div>
 					</div>
 				</div>

@@ -1,13 +1,17 @@
 import React from 'react';
 import LanguageAnalyticsSection from '../components/LanguageAnalyticsSection';
 import KpiCard from '../components/KpiCard';
+import { useTranslation } from '../i18n/useTranslation';
 
 export default function LanguageAnalyticsPage(): JSX.Element {
+	const { language, t } = useTranslation();
+	const align = language === 'ar' ? 'text-right' : 'text-left';
 	// Multi-line usage chart for 3 languages across last 7 days
 	function UsageChart(): JSX.Element {
 		const w = 560;
 		const h = 200;
 		const pad = 28;
+		const tickPad = 14;
 		const labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 		// mock sessions
 		const urdu =   [120, 130, 125, 140, 150, 155, 160];
@@ -29,7 +33,7 @@ export default function LanguageAnalyticsPage(): JSX.Element {
 				{[50, 100, 150].map((g) => (
 					<g key={g}>
 						<line x1={pad} y1={ys(g)} x2={w - pad} y2={ys(g)} className="stroke-gray-200" />
-						<text x={pad - 12} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle">{g}</text>
+						<text x={pad - tickPad} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle" style={{ direction: 'ltr' }}>{g}</text>
 					</g>
 				))}
 				{labels.map((m, i) => (
@@ -52,24 +56,24 @@ export default function LanguageAnalyticsPage(): JSX.Element {
 			<LanguageAnalyticsSection />
 			{/* Additional metrics row */}
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				<KpiCard title="New languages added (30d)" value="2" bgClass="bg-emerald-600" />
-				<KpiCard title="Glossary terms maintained" value="1,240" bgClass="bg-green-700" />
-				<KpiCard title="Avg translation latency" value="280 ms" bgClass="bg-amber-700" />
+				<KpiCard title={t('langAnalytics.kpi.newLanguages30d')} value="2" bgClass="bg-emerald-600" />
+				<KpiCard title={t('langAnalytics.kpi.glossaryMaintained')} value="1,240" bgClass="bg-green-700" />
+				<KpiCard title={t('langAnalytics.kpi.avgLatency')} value="280 ms" bgClass="bg-amber-700" />
 			</div>
 			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Sessions per language</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('langAnalytics.sessionsPerLanguage')}</p>
 					<div className="mt-4 space-y-3">
-						{['Arabic', 'English', 'Urdu', 'Bengali', 'Tagalog', 'Amharic'].map((lang, i) => (
-							<div key={lang} className="flex items-center gap-3">
-								<span className="w-24 text-sm text-gray-700">{lang}</span>
+						{['arabic', 'english', 'urdu', 'bengali', 'tagalog', 'amharic'].map((langKey, i) => (
+							<div key={langKey} className="flex items-center gap-3">
+								<span className={`w-24 text-sm text-gray-700 ${align}`}>{t(`lang.${langKey}`)}</span>
 								<div className="h-2 flex-1 rounded-full bg-gray-200"><div className="h-2 rounded-full bg-sky-500" style={{ width: `${90 - i * 10}%` }} /></div>
 							</div>
 						))}
 					</div>
 				</div>
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Usage per language – last 7 days</p>
+					<p className={`text-sm font-medium text-gray-900 ${align}`}>{t('langAnalytics.usage7days')}</p>
 					<div className="mt-2">
 						<UsageChart />
 					</div>

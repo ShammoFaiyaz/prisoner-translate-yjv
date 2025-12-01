@@ -1,18 +1,20 @@
 import React from 'react';
 import RealTimeMonitorSection from '../components/RealTimeMonitorSection';
 import KpiCard from '../components/KpiCard';
+import { useTranslation } from '../i18n/useTranslation';
 
 export default function RealTimeMonitorPage(): JSX.Element {
+	const { t } = useTranslation();
 	return (
 		<section className="space-y-8">
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<KpiCard title="Active Sessions" value="8" bgClass="bg-green-700" />
-				<KpiCard title="Avg AI Confidence" value="93%" bgClass="bg-emerald-600" />
-				<KpiCard title="Most Used Language" value="Bengali" bgClass="bg-amber-700" />
-				<KpiCard title="Urgent Sessions" value="1" bgClass="bg-amber-700" />
+				<KpiCard title={t('monitor.kpi.active')} value="8" bgClass="bg-green-700" />
+				<KpiCard title={t('monitor.kpi.avgConfidence')} value="93%" bgClass="bg-emerald-600" />
+				<KpiCard title={t('monitor.kpi.mostUsedLanguage')} value={t('lang.bengali')} bgClass="bg-amber-700" />
+				<KpiCard title={t('monitor.kpi.urgentSessions')} value="1" bgClass="bg-amber-700" />
 			</div>
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-				<p className="text-sm font-medium text-gray-900">Topic distribution today</p>
+				<p className="text-sm font-medium text-gray-900">{t('monitor.topicDistributionToday')}</p>
 				<div className="mt-4 grid grid-cols-4 gap-4">
 					<div className="text-center">
 						<div className="mx-auto h-20 w-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">Medical</div>

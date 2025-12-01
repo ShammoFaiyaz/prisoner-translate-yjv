@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '../i18n/useTranslation';
 
 type CircleMetricProps = {
 	label: string;
@@ -25,22 +26,23 @@ function CircleMetric({ label, value, percent = 100 }: CircleMetricProps): JSX.E
 }
 
 export default function Vision2030Section(): JSX.Element {
+	const { t } = useTranslation();
 	return (
 		<section>
 			<div className="mb-2">
-				<h3 className="text-lg font-semibold text-gray-900">Vision 2030 Impact</h3>
-				<p className="mt-1 text-sm text-gray-600">Modern, humane, data-driven correctional facilities</p>
+				<h3 className="text-lg font-semibold text-gray-900">{t('vision.section.title')}</h3>
+				<p className="mt-1 text-sm text-gray-600">{t('vision.section.subtitle')}</p>
 			</div>
 
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
 				<div className="grid grid-cols-2 place-items-center gap-6 sm:grid-cols-4">
-					<CircleMetric label="Modernization Index" value="94%" percent={94} />
-					<CircleMetric label="Humanitarian Standards Score" value="98%" percent={98} />
-					<CircleMetric label="Innovation Adoption Rate" value="87%" percent={87} />
-					<CircleMetric label="Global Benchmark Position" value="Top 5" percent={100} />
+					<CircleMetric label={t('vision.metric.modernizationIndex')} value="94%" percent={94} />
+					<CircleMetric label={t('vision.metric.humanitarianStandards')} value="98%" percent={98} />
+					<CircleMetric label={t('vision.metric.innovationAdoption')} value="87%" percent={87} />
+					<CircleMetric label={t('vision.metric.globalBenchmark')} value="Top 5" percent={100} />
 				</div>
 				<p className="mt-6 text-center text-sm text-gray-700">
-					Smart partnership. Human-centered technology. Serving justice and dignity.
+					{t('vision.section.taglineShort')}
 				</p>
 			</div>
 		</section>

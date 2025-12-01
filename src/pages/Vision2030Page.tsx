@@ -1,16 +1,18 @@
 import React from 'react';
 import Vision2030Section from '../components/Vision2030Section';
+import { useTranslation } from '../i18n/useTranslation';
 
-export default function Vision2030Page(): JSX.Element {
+export function Vision2030Page(): JSX.Element {
+	const { t, language } = useTranslation();
 	// --- Simple SVG Radar (spider) chart with mock values ---
 	const radarLabels = [
-		'Security',
-		'Operational',
-		'Justice',
-		'Healthcare',
-		'Workforce',
-		'Data',
-		'Tech',
+		t('vision.radar.security'),
+		t('vision.radar.operational'),
+		t('vision.radar.justice'),
+		t('vision.radar.healthcare'),
+		t('vision.radar.workforce'),
+		t('vision.radar.data'),
+		t('vision.radar.tech'),
 	];
 	// normalized 0-1
 	const radarValues = [0.92, 0.88, 0.96, 0.9, 0.85, 0.82, 0.87];
@@ -53,10 +55,11 @@ export default function Vision2030Page(): JSX.Element {
 				{/* labels placed outside the circle and larger */}
 				{radarLabels.map((lbl, i) => {
 					const [x, y] = toPoint(i, 1.25);
+					// adjust a few labels slightly to keep clarity regardless of language
 					let dx = 0;
-					if (lbl === 'Operational') dx = 12;
-					if (lbl === 'Tech Adoption') dx = -12;
-					if (lbl === 'Analytics') dx = -12;
+					if (i === 1) dx = 12; // operational
+					if (i === radarLabels.length - 1) dx = -12; // tech
+					if (i === radarLabels.length - 2) dx = -12; // data
 					return (
 						<text key={lbl} x={x + dx} y={y} textAnchor="middle" dominantBaseline="middle" className="text-[12px] fill-gray-700">
 							{lbl}
@@ -73,6 +76,7 @@ export default function Vision2030Page(): JSX.Element {
 		const w = 560;
 		const h = 200;
 		const pad = 28;
+		const tickPad = 14;
 		const xs = (i: number) => pad + (i * (w - 2 * pad)) / (lineData.length - 1);
 		const ys = (v: number) => h - pad - ((v - 50) * (h - 2 * pad)) / 50; // scale 50-100%
 		const d = lineData.map((v, i) => `${i === 0 ? 'M' : 'L'} ${xs(i)} ${ys(v)}`).join(' ');
@@ -97,7 +101,7 @@ export default function Vision2030Page(): JSX.Element {
 				{[60, 70, 80, 90, 100].map((g) => (
 					<g key={g}>
 						<line x1={pad} y1={ys(g)} x2={w - pad} y2={ys(g)} className="stroke-gray-200" />
-						<text x={pad - 14} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle">{g}%</text>
+						<text x={pad - tickPad} y={ys(g)} className="text-[10px] fill-gray-600" textAnchor="end" dominantBaseline="middle" style={{ direction: 'ltr' }}>{g}%</text>
 					</g>
 				))}
 				{/* x-axis ticks and labels */}
@@ -121,9 +125,9 @@ export default function Vision2030Page(): JSX.Element {
 	return (
 		<section className="space-y-8">
 			<div className="mb-2">
-				<h2 className="text-xl font-semibold text-gray-900">Vision 2030 Alignment</h2>
+				<h2 className="text-xl font-semibold text-gray-900">{t('vision.alignment')}</h2>
 				<p className="mt-1 text-sm text-gray-600">
-					A strategic enabler for modern, humane, data-driven correctional facilities across the Kingdom.
+					{t('vision.alignment.subtitle')}
 				</p>
 			</div>
 			<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
@@ -131,23 +135,23 @@ export default function Vision2030Page(): JSX.Element {
 			</div>
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
 				{[
-					['Enhance National Security', ['Reduce language-based conflicts', 'Real-time incident translation'], 92],
-					['Modern, Humane Environment', ['Clear rights communication', 'Respect and dignity first'], 98],
-					['Operational Excellence', ['Faster procedures', 'Fewer handoffs'], 88],
-					['Empower Workforce', ['AI-assisted workflows', 'Training and upskilling'], 85],
-					['Safeguard Justice & Dignity', ['Legal clarity', 'Sensitive topic handling'], 96],
-					['Improve Healthcare', ['Accurate med terms', 'Compassionate care'], 90],
-					['Data & Analytics', ['Realtime dashboards', 'Predictive insights'], 82],
-					['Innovation Leadership', ['AI adoption at scale', 'Global benchmark'], 87],
-				].map(([title, bullets, pct]) => (
-					<div key={title as string} className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-						<p className="text-sm font-medium text-gray-900">{title as string}</p>
-						<ul className="mt-2 list-disc pl-5 text-xs text-gray-700">
-							{(bullets as string[]).map((b) => (<li key={b}>{b}</li>))}
+					['vision.cards.enhanceSecurity.title', ['vision.cards.enhanceSecurity.b1', 'vision.cards.enhanceSecurity.b2'], 92],
+					['vision.cards.modernHumane.title', ['vision.cards.modernHumane.b1', 'vision.cards.modernHumane.b2'], 98],
+					['vision.cards.operational.title', ['vision.cards.operational.b1', 'vision.cards.operational.b2'], 88],
+					['vision.cards.empowerWorkforce.title', ['vision.cards.empowerWorkforce.b1', 'vision.cards.empowerWorkforce.b2'], 85],
+					['vision.cards.safeguardJustice.title', ['vision.cards.safeguardJustice.b1', 'vision.cards.safeguardJustice.b2'], 96],
+					['vision.cards.improveHealthcare.title', ['vision.cards.improveHealthcare.b1', 'vision.cards.improveHealthcare.b2'], 90],
+					['vision.cards.dataAnalytics.title', ['vision.cards.dataAnalytics.b1', 'vision.cards.dataAnalytics.b2'], 82],
+					['vision.cards.innovation.title', ['vision.cards.innovation.b1', 'vision.cards.innovation.b2'], 87],
+				].map(([titleKey, bullets, pct]) => (
+					<div key={titleKey as string} className="rounded-xl border border-gray-200 bg-white p-4 elevation">
+						<p className="text-sm font-medium text-gray-900">{t(titleKey as string)}</p>
+						<ul className={`mt-2 list-disc ${language === 'ar' ? 'pr-4' : 'pl-4'} text-xs text-gray-700`}>
+							{(bullets as string[]).map((b) => (<li key={b}>{t(b)}</li>))}
 						</ul>
 						<div className="mt-3">
 							<div className="flex items-center justify-between text-xs text-gray-600">
-								<span>Progress</span><span>{pct as number}%</span>
+								<span>{t('vision.cards.progress')}</span><span>{pct as number}%</span>
 							</div>
 							<div className="mt-1 h-2 w-full rounded-full bg-gray-200">
 								<div className="h-2 rounded-full bg-emerald-500" style={{ width: `${pct}%` }} />
@@ -158,20 +162,20 @@ export default function Vision2030Page(): JSX.Element {
 			</div>
 			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Capability Radar</p>
+					<p className="text-sm font-medium text-gray-900">{t('vision.capabilityRadar')}</p>
 					<div className="mt-2">
 						<RadarChart />
 					</div>
 				</div>
 				<div className="rounded-xl border border-gray-200 bg-white p-4 elevation">
-					<p className="text-sm font-medium text-gray-900">Goal progress over last 12 months</p>
+					<p className="text-sm font-medium text-gray-900">{t('vision.goalProgress12mo')}</p>
 					<div className="mt-2">
 						<LineChart />
 					</div>
 				</div>
 			</div>
 			<div className="rounded-xl border border-gray-200 bg-white p-6 elevation text-center text-sm text-gray-800">
-				Smart partnership. Human-centered technology. Strengthening national security, justice, and dignity in line with Vision 2030.
+				{t('vision.tagline')}
 			</div>
 		</section>
 	);

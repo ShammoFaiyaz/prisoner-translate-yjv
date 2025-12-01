@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import LanguageToggle from '../components/LanguageToggle';
+import { useTranslation } from '../i18n/useTranslation';
 
 type NavItem = {
-	label: string;
+	labelKey: string;
 	href: string;
 	Icon: (props: { className?: string }) => JSX.Element;
 };
@@ -52,19 +54,20 @@ const IconSparkles = ({ className }: { className?: string }) => (
 );
 
 const navItems: NavItem[] = [
-	{ label: 'Overview', href: '/', Icon: IconHome },
-	{ label: 'Real-time Monitor', href: '/monitor', Icon: IconActivity },
-	{ label: 'Security', href: '/security', Icon: IconShield },
-	{ label: 'Operations', href: '/operations', Icon: IconCog },
-	{ label: 'Legal & Justice', href: '/legal-justice', Icon: IconScale },
-	{ label: 'Health', href: '/health', Icon: IconHeart },
-	{ label: 'Languages', href: '/languages', Icon: IconGlobe },
-	{ label: 'Vision 2030', href: '/vision-2030', Icon: IconSparkles },
+	{ labelKey: 'sidebar.overview', href: '/', Icon: IconHome },
+	{ labelKey: 'sidebar.monitor', href: '/monitor', Icon: IconActivity },
+	{ labelKey: 'sidebar.security', href: '/security', Icon: IconShield },
+	{ labelKey: 'sidebar.operations', href: '/operations', Icon: IconCog },
+	{ labelKey: 'sidebar.legal', href: '/legal-justice', Icon: IconScale },
+	{ labelKey: 'sidebar.health', href: '/health', Icon: IconHeart },
+	{ labelKey: 'sidebar.languages', href: '/languages', Icon: IconGlobe },
+	{ labelKey: 'sidebar.vision2030', href: '/vision-2030', Icon: IconSparkles },
 ];
 
 export default function DashboardLayout(): JSX.Element {
 	const location = useLocation();
 	const [notifOpen, setNotifOpen] = React.useState(false);
+	const { t } = useTranslation();
 	React.useEffect(() => {
 		// On route change: fade in all page sections at once
 		const targets = Array.from(
@@ -90,36 +93,43 @@ export default function DashboardLayout(): JSX.Element {
 				<div className="flex h-20 items-center gap-3 px-4">
 					<img src="/PITP-guard-logo.svg" alt="PITP Logo" className="h-12 w-12" />
 					<div className="min-w-0">
-						<p className="truncate text-base font-semibold text-gray-900">
-							Prisoner Intelligent <br />Translation Platform (PITP)
-						</p>
+						{(() => {
+							const l1 = t('brand.title.l1');
+							const l2 = t('brand.title.l2');
+							return (
+								<p className="text-base font-semibold text-gray-900 leading-tight">
+									{l1}
+									{l2 ? (<><br />{l2}</>) : null}
+								</p>
+							);
+						})()}
 					</div>
 				</div>
 				<div className="px-4 pt-3">
 					<div className="flex items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-emerald-700">
 						<span className="h-2 w-2 rounded-full bg-emerald-500" />
-						<span className="text-sm font-medium">Connected</span>
+						<span className="text-sm font-medium">{t('sidebar.connected')}</span>
 					</div>
 					<div className="mt-5">
 						<div className="mb-2 text-sm font-semibold text-gray-700">
-							Translator Overview
+							{t('sidebar.translatorOverview')}
 						</div>
 						<div className="grid grid-cols-2 gap-2">
 							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-green-700 text-white">
-								<div className="text-sm font-medium text-white/90">Translations Today</div>
+								<div className="text-sm font-medium text-white/90">{t('kpi.translationsToday')}</div>
 								<div className="text-2xl font-semibold">3,480</div>
 							</div>
 							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-emerald-600 text-white">
-								<div className="text-sm font-medium text-white/90">AI Accuracy</div>
+								<div className="text-sm font-medium text-white/90">{t('kpi.aiAccuracy')}</div>
 								<div className="text-2xl font-semibold">98.6%</div>
 							</div>
 							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-amber-700 text-white">
-								<div className="text-sm font-medium text-white/90">Active Devices</div>
+								<div className="text-sm font-medium text-white/90">{t('kpi.activeDevices')}</div>
 								<div className="text-2xl font-semibold">142</div>
 							</div>
 							<div className="rounded-2xl border border-gray-200 p-4 h-28 flex flex-col justify-between elevation bg-teal-600 text-white">
-								<div className="text-sm font-medium text-white/90">System Status</div>
-								<div className="text-xl font-semibold">Online</div>
+								<div className="text-sm font-medium text-white/90">{t('kpi.systemStatus')}</div>
+								<div className="text-xl font-semibold">{t('kpi.online')}</div>
 							</div>
 						</div>
 					</div>
@@ -129,7 +139,7 @@ export default function DashboardLayout(): JSX.Element {
 						{navItems.map((item) => {
 							const active = location.pathname === item.href;
 							return (
-								<li key={item.label}>
+								<li key={item.href}>
 									<NavLink
 										to={item.href}
 										className={`group flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 ${
@@ -137,7 +147,7 @@ export default function DashboardLayout(): JSX.Element {
 										}`}
 									>
 										<item.Icon className="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
-										<span className="truncate">{item.label}</span>
+										<span className="truncate">{t(item.labelKey)}</span>
 									</NavLink>
 								</li>
 							);
@@ -146,12 +156,12 @@ export default function DashboardLayout(): JSX.Element {
 				</nav>
 				<div className="border-t border-gray-200 p-3">
 					<a
-						href="https://inova.sa"
+						href="https://www.inovasolutions.ai/"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
 					>
-						<span>Powered by</span>
+						<span>{t('poweredBy')}</span>
 						<img src="/inova-logo.svg" alt="INOVA" className="h-8 w-auto" />
 					</a>
 				</div>
@@ -161,43 +171,43 @@ export default function DashboardLayout(): JSX.Element {
 				<header className="sticky top-0 z-30 w-full border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
 					<div className="mx-auto flex h-14 max-w-[1400px] items-center justify-end gap-2 px-3 sm:px-4 lg:px-6">
 						<label htmlFor="global-facility" className="hidden text-sm text-gray-600 md:block">
-							Facility
+							{t('header.facility')}
 						</label>
 						<select id="global-facility" name="global-facility" className="filter-control">
-							<option>All Facilities</option>
-							<option>Riyadh Reform Center</option>
-							<option>Jeddah Rehabilitation Complex</option>
-							<option>Dammam Correctional Facility</option>
+							<option>{t('header.facility.all')}</option>
+							<option>{t('header.facility.riyadh')}</option>
+							<option>{t('header.facility.jeddah')}</option>
+							<option>{t('header.facility.dammam')}</option>
 						</select>
 						<select className="hidden md:block filter-control">
-							<option>All Topics</option>
-							<option>Medical</option>
-							<option>Legal</option>
-							<option>Routine</option>
-							<option>Urgent</option>
+							<option>{t('header.topic.all')}</option>
+							<option>{t('header.topic.medical')}</option>
+							<option>{t('header.topic.legal')}</option>
+							<option>{t('header.topic.routine')}</option>
+							<option>{t('header.topic.urgent')}</option>
 						</select>
 						<select className="hidden md:block filter-control">
-							<option>Today</option>
-							<option>Last 7 days</option>
-							<option>Last 30 days</option>
+							<option>{t('header.range.today')}</option>
+							<option>{t('header.range.7d')}</option>
+							<option>{t('header.range.30d')}</option>
 						</select>
 						<select className="hidden lg:block filter-control">
-							<option>All Languages</option>
-							<option>Arabic</option>
-							<option>English</option>
-							<option>Urdu</option>
-							<option>Bengali</option>
-							<option>Tagalog</option>
-							<option>Amharic</option>
+							<option>{t('header.lang.all')}</option>
+							<option>{t('header.lang.ar')}</option>
+							<option>{t('header.lang.en')}</option>
+							<option>{t('header.lang.ur')}</option>
+							<option>{t('header.lang.bn')}</option>
+							<option>{t('header.lang.tl')}</option>
+							<option>{t('header.lang.am')}</option>
 						</select>
 						<div className="hidden items-center gap-2 filter-control text-gray-700 sm:flex">
 							<span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-							<span>System Online</span>
+							<span>{t('header.systemOnline')}</span>
 						</div>
 						<div className="relative">
 							<button
 								type="button"
-								aria-label="Notifications"
+								aria-label={t('header.notifications')}
 								onClick={() => setNotifOpen((v) => !v)}
 								className="rounded-full p-2 text-gray-700 hover:bg-gray-100 focus:outline-none"
 							>
@@ -211,31 +221,32 @@ export default function DashboardLayout(): JSX.Element {
 							{notifOpen ? (
 								<div className="absolute right-0 z-50 mt-2 w-72 rounded-md border border-gray-200 bg-white/95 p-2 shadow-md backdrop-blur">
 									<div className="mb-1 flex items-center justify-between">
-										<p className="text-xs font-medium text-gray-900">Notifications</p>
+										<p className="text-xs font-medium text-gray-900">{t('header.notifications')}</p>
 										<button className="text-[11px] text-emerald-700 hover:underline" onClick={() => {
 											// simulate mark all read by closing and removing badge
 											const badge = (document.querySelector('#notif-badge') as HTMLElement) || null;
 											if (badge) badge.style.display = 'none';
 											setNotifOpen(false);
-										}}>Mark all as read</button>
+										}}>{t('header.markAllRead')}</button>
 									</div>
 									<ul className="space-y-1 text-xs text-gray-700">
 										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
 											<span className="mt-1 h-2 w-2 rounded-full bg-emerald-500" />
-											<span>System healthy. No incidents reported.</span>
+											<span>{t('notif.healthy')}</span>
 										</li>
 										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
 											<span className="mt-1 h-2 w-2 rounded-full bg-amber-500" />
-											<span>Maintenance window tonight 02:00–03:00.</span>
+											<span>{t('notif.maintenance')}</span>
 										</li>
 										<li className="flex items-start gap-2 rounded-md p-2 hover:bg-gray-50">
 											<span className="mt-1 h-2 w-2 rounded-full bg-sky-500" />
-											<span>New device activated in Riyadh Reform Center.</span>
+											<span>{t('notif.newDevice')}</span>
 										</li>
 									</ul>
 								</div>
 							) : null}
 						</div>
+						<LanguageToggle />
 					</div>
 				</header>
 				<div className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 via-white to-gray-100">
