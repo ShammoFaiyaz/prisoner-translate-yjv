@@ -1,9 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Prisoner Intelligent Translation Platform (PITP)</title>
+		<title>الروبوت الذكي للترجمة الفورية والتفاعلية للنزلاء</title>
+		<script>
+			/* Ensure correct language/dir/title before React mounts to avoid flicker */
+			(function () {
+				try {
+					var saved = localStorage.getItem('pitp-language') || 'ar';
+					document.documentElement.lang = saved;
+					document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr';
+					document.title =
+						saved === 'ar'
+							? 'الروبوت الذكي للترجمة الفورية والتفاعلية للنزلاء'
+							: 'Prisoner Intelligent Translation Platform (PITP)';
+				} catch (e) {
+					/* no-op */
+				}
+			})();
+		</script>
 		<link rel="icon" type="image/svg+xml" href="/PITP-guard-logo.svg" />
 		<link rel="alternate icon" href="/favicon.ico" />
 	</head>

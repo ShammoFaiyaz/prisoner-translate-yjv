@@ -20,6 +20,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }): J
 	});
 
 	const setLanguage = (lang: Language) => {
+		if (typeof document !== 'undefined') {
+			document.body.classList.add('lang-switching');
+			window.setTimeout(() => {
+				document.body.classList.remove('lang-switching');
+			}, 260);
+		}
 		setLanguageState(lang);
 		if (typeof window !== 'undefined') {
 			localStorage.setItem('pitp-language', lang);

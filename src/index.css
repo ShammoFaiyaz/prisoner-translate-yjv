@@ -17,7 +17,20 @@
 	}
 	/* Unified control style for filters/buttons/selects */
 	.filter-control {
-		@apply h-10 min-w-[180px] rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 shadow-sm hover:border-gray-400 focus:border-emerald-600 transition-colors duration-150;
+		@apply h-10 min-w-[180px] rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 shadow-sm hover:border-gray-400 focus:border-emerald-600 transition-colors duration-150 appearance-none;
+		/* Custom logical arrow so we can control spacing on both LTR and RTL */
+		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'><path d='M6 8l4 4 4-4' stroke='%23111827' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+		background-repeat: no-repeat;
+		background-size: 0.9rem;
+		/* place arrow with a gap from the end-side border */
+		background-position: right 0.7rem center;
+		/* keep text clear of the arrow */
+		padding-inline-end: 2.2rem;
+	}
+	/* Mirror arrow position for RTL and create symmetric spacing */
+	html[dir="rtl"] .filter-control {
+		background-position: left 0.7rem center;
+		padding-inline-start: 2.2rem;
 	}
 
 	/* Route/page fade-in */
@@ -38,11 +51,16 @@
 		opacity: 1;
 		transform: none;
 	}
+
+	/* Language switch fade-in only */
+	.lang-switching #root { animation: langFadeIn 220ms ease-out; }
 }
 
 @keyframes fadeInUp {
 	from { opacity: 0; transform: translateY(6px); }
 	to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes langFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 
