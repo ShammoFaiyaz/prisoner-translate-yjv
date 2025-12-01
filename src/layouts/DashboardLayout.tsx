@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import LanguageToggle from '../components/LanguageToggle';
+import { useLanguage } from '../i18n/LanguageContext';
 import { useTranslation } from '../i18n/useTranslation';
 
 type NavItem = {
@@ -68,6 +69,7 @@ export default function DashboardLayout(): JSX.Element {
 	const location = useLocation();
 	const [notifOpen, setNotifOpen] = React.useState(false);
 	const { t } = useTranslation();
+	const { language } = useLanguage();
 	React.useEffect(() => {
 		// On route change: fade in all page sections at once
 		const targets = Array.from(
@@ -169,7 +171,11 @@ export default function DashboardLayout(): JSX.Element {
 			<div className="flex min-w-0 flex-1 flex-col">
 				{/* Top controls bar */}
 				<header className="sticky top-0 z-30 w-full border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-					<div className="mx-auto flex h-14 max-w-[1400px] items-center justify-end gap-2 px-3 sm:px-4 lg:px-6">
+					<div
+						className={`mx-auto flex h-14 max-w-[1400px] items-center justify-end gap-2 px-3 sm:px-4 lg:px-6 ${
+							language === 'en' ? 'pr-6 sm:pr-7 lg:pr-8' : 'pl-6 sm:pl-7 lg:pl-8'
+						}`}
+					>
 						<label htmlFor="global-facility" className="hidden text-sm text-gray-600 md:block">
 							{t('header.facility')}
 						</label>
